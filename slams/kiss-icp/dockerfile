@@ -1,0 +1,41 @@
+ARG ROS_DISTRO=humble
+ 
+FROM osrf/ros:${ROS_DISTRO}-desktop as base
+ENV ROS_DISTRO=${ROS_DISTRO}
+SHELL ["/bin/bash", "-c"]
+ 
+# Create Colcon workspace with external dependencies
+RUN mkdir -p /mandeye_ws/src/
+WORKDIR /mandeye_ws/
+RUN cd ./src && git clone https://github.com/michalpelka/mandeye_to_bag.git -b mp/ros2_kiss  && cd mandeye_to_bag && git submodule init && git submodule update
+    
+RUN source /opt/ros/${ROS_DISTRO}/setup.bash \
+    && colcon build 
+
+RUN apt-get update && apt-get install -y \
+    python3-pip \
+    unzip &&\
+    pip install gdown 
+
+# SETUP SYSTEM UNDER TEST
+ARG SYSTEM_SETUP=setup_kiss.sh
+COPY $SYSTEM_SETUP system_setup.sh
+RUN source ./install/setup.sh \
+    && ./system_setup.sh
+
+# copy system undertest
+ARG SYSTEM_RUN=run_kiss.sh
+COPY $SYSTEM_RUN system_run.sh
+
+# GET DATA
+ARG DATASET=./slams_dojo_datasets/data_office.sh    
+COPY $DATASET dataset_download.sh
+RUN ./dataset_download.sh
+
+# CONVERT DATA
+RUN source ./install/setup.sh \
+    && ros2 run mandeye_to_rosbag2 mandeye_to_rosbag2_node /test_data_mandeye /test_data_bag
+
+
+RUN source ./install/setup.sh
+
