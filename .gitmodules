@@ -1,0 +1,3 @@
+[submodule "slams/kiss-icp/slams_dojo_datasets"]
+	path = slams/kiss-icp/slams_dojo_datasets
+	url = https://github.com/michalpelka/slams_dojo_datasets.git
