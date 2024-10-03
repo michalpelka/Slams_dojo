@@ -14,7 +14,8 @@ RUN source /opt/ros/${ROS_DISTRO}/setup.bash \
 
 RUN apt-get update && apt-get install -y \
     python3-pip \
-    unzip &&\
+    unzip \
+    p7zip-full &&\
     pip install gdown 
 
 # SETUP SYSTEM UNDER TEST
@@ -27,10 +28,15 @@ RUN source ./install/setup.sh \
 ARG SYSTEM_RUN=run_kiss.sh
 COPY $SYSTEM_RUN system_run.sh
 
-# GET DATA
-ARG DATASET=./slams_dojo_datasets/data_office.sh    
-COPY $DATASET dataset_download.sh
-RUN ./dataset_download.sh
+
+# copy datasets
+COPY ./slams_dojo_datasets ./slams_dojo_datasets
+
+# download data with given script
+ARG DATASET=data_office
+RUN cd ./slams_dojo_datasets  && ls
+RUN ./slams_dojo_datasets/$DATASET.sh
+
 
 # CONVERT DATA
 RUN source ./install/setup.sh \

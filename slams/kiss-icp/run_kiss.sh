@@ -24,10 +24,10 @@ ros2 run kiss_icp kiss_icp_node \
   -p use_sim_time:=false &
 
 # launch eval - trajectory - in background
-ros2 run mandeye_to_rosbag2 log_trajectory --ros-args -p topic:=/kiss/odometry -p output_file:=/evaluation/trajectory.csv&
+ros2 run mandeye_to_rosbag2 log_trajectory --ros-args -p topic:=/kiss/odometry -p output_file:=/evaluation/trajectory_${DATASET_NAME}.csv&
 
 # launch eval - pointcloud 
-ros2 run mandeye_to_rosbag2 log_cloud --ros-args -p topic:=/kiss/ -p output_file:=/evaluation/cloud.csv&
+ros2 run mandeye_to_rosbag2 log_cloud --ros-args -p topic:=/kiss/local_map -p output_file:=/evaluation/cloud_${DATASET_NAME}.csv&
 
 #play bag
 sleep 2

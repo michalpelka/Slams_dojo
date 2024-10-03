@@ -1,7 +1,18 @@
 # Slams_dojo
-A collection of dockerized enviroments to run slams
+A collection of dockerized enviroments to run SLAM algorithm against data from 
 
-# Repo structure
+
+# Datasets
+
+In every SLAM's directory there is instance of subrepo slam_dojo_datasets.
+That repository contains available datasets to test against.
+
+### Own dataset
+You can use own dataset from Mandeye. Please put it  `./*/slams_dojo_datasets/user_data`.
+Then as Dataset use:
+```
+--build-arg DATASET=./slams_dojo_datasets/users_data.sh
+```
 
 
 # Kiss-icp
