@@ -34,14 +34,16 @@ COPY ./slams_dojo_datasets ./slams_dojo_datasets
 
 # download data with given script
 ARG DATASET=data_office
+ENV DATASET_NAME=$DATASET
 RUN cd ./slams_dojo_datasets  && ls
 RUN ./slams_dojo_datasets/$DATASET.sh
 
+# Clean up process artifacts
+RUN rm /test_data_mandeye/*lio*.laz
 
 # CONVERT DATA
 RUN source ./install/setup.sh \
     && ros2 run mandeye_to_rosbag2 mandeye_to_rosbag2_node /test_data_mandeye /test_data_bag
-
 
 RUN source ./install/setup.sh
 

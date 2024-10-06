@@ -26,9 +26,6 @@ ros2 run kiss_icp kiss_icp_node \
 # launch eval - trajectory - in background
 ros2 run mandeye_to_rosbag2 log_trajectory --ros-args -p topic:=/kiss/odometry -p output_file:=/evaluation/trajectory_${DATASET_NAME}.csv&
 
-# launch eval - pointcloud 
-ros2 run mandeye_to_rosbag2 log_cloud --ros-args -p topic:=/kiss/local_map -p output_file:=/evaluation/cloud_${DATASET_NAME}.csv&
-
 #play bag
 sleep 2
 echo "Playing bag file, wait"
@@ -36,3 +33,5 @@ ros2 bag play /test_data_bag
 echo "Bag file finished, killall ros2 nodes"
 
 pkill -f ros
+chmod 777 /evaluation/trajectory_${DATASET_NAME}.csv
+chmod 777 /evaluation/cloud_${DATASET_NAME}.csv
