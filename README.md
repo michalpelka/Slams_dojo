@@ -36,8 +36,8 @@ It is a original code from [original repo](https://github.com/hku-mars/FAST_LIO)
 
 To run system perform steps:
 ```bash
-docker build ./slams/fastlio/ -t dojo_fastlio_office --build-arg DATASET=data_office 
-docker run -v ./evaluation-fastlio:/evaluation dojo_fastlio_office ./system_run.sh
+docker build ./slams/fastlio/ -t dojo_fastlio_parking --build-arg DATASET=data_undeground_parking 
+docker run -v ./evaluation-fastlio:/evaluation dojo_fastlio_parking ./system_run.sh
 ```
 
 
@@ -48,5 +48,5 @@ You can use `osrf/rocker` instead of `docker run`.
 It will allow you to evaluate output in realtime with rviz.
 Here is example for FAST-LIO:
 ```bash
-rocker --x11 --nvidia auto --volume $(pwd)/evaluation-fastlio /evaluation -- dojo_fastlio_office ./system_run.sh
+rocker --x11 --nvidia auto --volume $(pwd)/evaluation-fastlio:/evaluation -- dojo_fastlio_parking ./system_run.sh
 ```

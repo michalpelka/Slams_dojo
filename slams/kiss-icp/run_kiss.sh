@@ -5,9 +5,9 @@
 ros2 run kiss_icp kiss_icp_node \
   --ros-args \
   -r pointcloud_topic:=/livox/pointcloud \
-  -p lidar_odom_frame:=livox\
-  -p publish_odom_tf:=false\
-  -p invert_odom_tf:=false\
+  -p lidar_odom_frame:=odom_lidar\
+  -p publish_odom_tf:=true\
+  -p invert_odom_tf:=true\
   -p max_range:=100.0 \
   -p min_range:=1.0 \
   -p deskew:=false \
@@ -23,6 +23,7 @@ ros2 run kiss_icp kiss_icp_node \
   -p publish_debug_clouds:=true \
   -p use_sim_time:=false &
 
+rviz2 -d /mandeye_ws/src/kiss-icp/ros/rviz/kiss_icp.rviz --ros-args -p use_sim_time:=true&
 # launch eval - trajectory - in background
 ros2 run mandeye_to_rosbag2 log_trajectory --ros-args -p topic:=/kiss/odometry -p output_file:=/evaluation/trajectory_${DATASET_NAME}.csv&
 
