@@ -7,7 +7,7 @@ SHELL ["/bin/bash", "-c"]
 # Create Colcon workspace with external dependencies
 RUN mkdir -p /mandeye_ws/src/
 WORKDIR /mandeye_ws/
-RUN cd ./src && git clone https://github.com/michalpelka/mandeye_to_bag.git -b mp/ros2_kiss  && cd mandeye_to_bag && git submodule init && git submodule update
+RUN cd ./src && git clone https://github.com/michalpelka/mandeye_to_bag.git  && cd mandeye_to_bag && git submodule init && git submodule update
     
 RUN source /opt/ros/${ROS_DISTRO}/setup.bash \
     && colcon build 
@@ -39,7 +39,7 @@ RUN cd ./slams_dojo_datasets  && ls
 RUN ./slams_dojo_datasets/$DATASET.sh
 
 # Clean up process artifacts
-RUN rm /test_data_mandeye/*lio*.laz
+RUN rm -f /test_data_mandeye/*lio*.laz
 
 # CONVERT DATA
 RUN source ./install/setup.sh \

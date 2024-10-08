@@ -1,7 +1,7 @@
 #! /bin/sh
 . /mandeye_ws/devel/setup.sh
 
-rosmaster &
+roscore &
 sleep 1
 roslaunch fast_lio mapping_avia.launch &
 
@@ -10,7 +10,7 @@ rosparam set /file_path "/evaluation/trajectory_${DATASET_NAME}.csv"
 # launch eval - trajectory - in background
 rosrun mandeye_to_rosbag1 log_trajectory &
 
-sleep 5
+sleep 20
 echo "Playing bag file, wait"
 rosbag play /test_data_bag
 
